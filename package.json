@@ -1,0 +1,16 @@
+{
+  "name": "hackernews",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-scripts": "1.0.13"
+  },
+  "scripts": {
+    "start": "NODE_PATH=src:src/components:src/containers react-scripts start",
+    "build": "NODE_PATH=src:src/components:src/containers react-scripts build",
+    "test":  "NODE_PATH=src:src/components:src/containers react-scripts test --env=jsdom",
+    "eject": "NODE_PATH=src:src/components:src/containers react-scripts eject"
+  }
+}
