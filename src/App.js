@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 
 import Button from 'components/Button';
+import Loader from 'components/Loader';
 import Search from 'components/Search';
 import Table from 'components/Table';
 
+import {
+  DEFAULT_QUERY,
+  DEFAULT_PAGE,
+  DEFAULT_HPP,
+
+  PATH_BASE,
+  PATH_SEARCH,
+  PARAM_SEARCH,
+  PARAM_PAGE,
+  PARAM_HPP
+} from 'constants/index.js';
+
 import './App.css';
-
-const DEFAULT_QUERY = 'redux';
-const DEFAULT_PAGE = 0;
-const DEFAULT_HPP = 100;
-
-const PATH_BASE = 'https://hn.algolia.com/api/v1';
-const PATH_SEARCH = '/search';
-const PARAM_SEARCH = 'query=';
-const PARAM_PAGE = 'page=';
-const PARAM_HPP = 'hitsPerPage=';
 
 class App extends Component {
   constructor(props) {
@@ -24,6 +27,7 @@ class App extends Component {
       results: null,
       searchKey: '',
       searchTerm: DEFAULT_QUERY,
+      isLoading: false,
     }
 
     this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
@@ -55,14 +59,16 @@ class App extends Component {
       results: {
         ...results,
         [searchKey]: { hits: updatedHits, page }
-      }
+      },
+      isLoading: false
     });
   }
 
   fetchSearchTopStories(searchTerm, page) {
+    this.setState({ isLoading: true });
+
     const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
     
-    console.log('parsedUrl', url)
     fetch(url)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
@@ -103,7 +109,12 @@ class App extends Component {
   }
 
   render() {
-    const { searchTerm, results, searchKey } = this.state;
+    const withLoading = (Component) => ({ isLoading, ...rest }) =>
+      isLoading ? <Loader /> : <Component { ...rest } />
+
+    const ButtonWithLoading = withLoading(Button);
+
+    const { searchTerm, results, searchKey, isLoading } = this.state;
     const page = (
       results &&
       results[searchKey] &&
@@ -131,11 +142,12 @@ class App extends Component {
           onDismiss={this.onDismiss}
         />
         <div className='interactions'>
-          <Button
+          <ButtonWithLoading
+            isLoading={isLoading}
             onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
           >
             More
-          </Button>
+          </ButtonWithLoading>
         </div>
       </div>
     );
@@ -143,3 +155,5 @@ class App extends Component {
 }
 
 export default App;
+
+export { Button, Search, Table };

@@ -1,19 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
-import App from './App';
 
-describe('App', () => {
-  it('renders', () => {
+import Search from 'components/Search';
+
+describe('Search', () => {
+  it ('renders', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<App />, div);
-  });
+    ReactDOM.render(<Search>Search</Search>, div);
+  })
 
   test('snapshots', () => {
     const component = renderer.create(
-      <App />
+      <Search>Search</Search>
     );
     let tree = component.toJSON();
     expect(tree).toMatchSnapshot();
-  });
-});
+  })
+})

@@ -3,14 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "prop-types": "^15.6.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.13"
   },
   "scripts": {
-    "start": "NODE_PATH=src:src/components:src/containers react-scripts start",
-    "build": "NODE_PATH=src:src/components:src/containers react-scripts build",
-    "test":  "NODE_PATH=src:src/components:src/containers react-scripts test --env=jsdom",
-    "eject": "NODE_PATH=src:src/components:src/containers react-scripts eject"
+    "start": "NODE_PATH=src:src/components:src/containers:src/constants react-scripts start",
+    "build": "NODE_PATH=src:src/components:src/containers:src/constants react-scripts build",
+    "test": "NODE_PATH=src:src/components:src/containers:src/constants react-scripts test --env=jsdom",
+    "eject": "NODE_PATH=src:src/components:src/containers:src/constants react-scripts eject"
+  },
+  "devDependencies": {
+    "enzyme": "^3.0.0",
+    "enzyme-adapter-react-15": "^1.0.0",
+    "react-test-renderer": "^15.6.2"
   }
 }
